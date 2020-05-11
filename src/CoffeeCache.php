@@ -11,8 +11,13 @@
  * @license    https://www.gnu.org/licenses/agpl-3.0.en.html/ GNU Affero General Public License v3.0
  */
 
-namespace HDInnovations\CacheHook;
-
+/**
+ * Class CoffeeCache
+ *
+ * @property int $cacheTime
+ * @property string $cacheDirPath
+ * @property string $cachedFilename
+ */
 class CoffeeCache
 {
     /**
@@ -69,7 +74,7 @@ class CoffeeCache
     {
         //Init
         $this->cachedFilename = sha1($_SERVER['REQUEST_URI']);
-        $this->cacheDirPath = storage_path().DIRECTORY_SEPARATOR.'coffeeCache';
+        $this->cacheDirPath = __DIR__.DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'coffeeCache';
     }
 
     /**
