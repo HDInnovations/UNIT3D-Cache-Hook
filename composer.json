@@ -1,0 +1,19 @@
+{
+    "name": "hdinnovations/unit3d-cache-hook",
+    "description": "File based UNIT3D cache hook for before composer autoload and Laravel bootstrapping.",
+    "type": "unit3d-package",
+    "license": "GNU Affero General Public License v3.0",
+    "authors": [
+        {
+            "name": "HDVinnie",
+            "email": "hdinnovations@protonmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "HDInnovations\\CacheHook\\": "src/"
+        }
+    },
+    "require": {}
+}
