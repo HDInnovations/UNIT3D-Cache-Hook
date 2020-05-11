@@ -21,19 +21,27 @@ To install, just:
 
 require_once './../vendor/hdinnovations/unit3d-cache-hook/src/CoffeeCache.php';
 
-$coffee_cache = new CoffeeCache();
-$coffee_cache->cacheTime = 60 * 60 * 24 * 1;
+$cache_path = '/var/www/html/storage/coffeeCache'; // Replace as needed
+$coffee_cache = new CoffeeCache($cache_path);
+$coffee_cache->cacheTime = 60;
+$coffee_cache->enabledHosts = [
+    'unit3d.dev',
+    'www.unit3d.dev',
+];
 $coffee_cache->enabledHttpStatusCodes = [
-        '200',
-        '202',
-    ];
+    '200',
+    '202',
+];
+$coffee_cache->excludeUrls = [];
 $coffee_cache->handle();
 
 /**
- * Laravel - A PHP Framework For Web Artisans.
+ * Laravel - A PHP Framework For Web Artisans
  *
+ * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
+
 define('LARAVEL_START', microtime(true));
 
 /*
@@ -45,7 +53,7 @@ define('LARAVEL_START', microtime(true));
 | our application. We just need to utilize it! We'll simply require it
 | into the script here so that we don't have to worry about manual
 | loading any of our classes later on. It feels great to relax.
-|s
+|
 */
 
 require __DIR__.'/../vendor/autoload.php';
@@ -79,9 +87,12 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
 /** @var Illuminate\Http\Response $response */
-$response = $kernel->handle($request = Illuminate\Http\Request::capture());
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+);
 
 if ($coffee_cache->isCacheAble()) {
+    $coffee_cache->httpStatusCode = $response->status();
     $response->sendHeaders();
     echo $response->content();
 } else {
